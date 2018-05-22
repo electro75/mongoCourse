@@ -17,5 +17,13 @@ describe('Reading Users from database', ()=>{
                 assert(users[0]._id.toString() === john._id.toString());
                 done();
             })
-    })
-})
+    });
+
+    it('Finds a User with a particular id', (done)=>{
+        User.findOne({ _id: john._id })
+            .then((user)=>{
+                assert(user.name === 'John')
+                done();
+            });
+    });
+});
