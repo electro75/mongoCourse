@@ -14,7 +14,7 @@ describe('Reading Users from database', ()=>{
     it('Finds all Users with name of John', (done)=>{
         User.find({name: 'John'})
             .then((users)=>{
-                console.log(users)
+                assert(users[0]._id.toString() === john._id.toString());
                 done();
             })
     })
