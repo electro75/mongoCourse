@@ -17,7 +17,7 @@ describe('Sub Documents', (done)=>{
 
     });
 
-    it('Can add subdocuments to an existing record', (done)=>{
+    it('Can add subdocuments to an existing record', (done) => {
         const joe = new User({
             name: 'Joe',
             posts: []
@@ -34,7 +34,25 @@ describe('Sub Documents', (done)=>{
                assert(user.posts[0].title === 'New Post');
                done();
            })
-
-
     });
+
+    it('can remove an existing subDocument', (done) => {
+        const joe = new User({
+            name: 'Joe',
+            posts: [{title: 'Title'}]
+        });
+        
+        joe.save()
+            .then(() => User.findOne({name: 'Joe'}))
+            .then((user) => {
+                user.posts[0].remove();
+                return user.save();
+            })
+            .then(()=> User.findOne({name: 'Joe'}))
+            .then((user)=>{
+                assert(user.posts.length === 0);
+                done();
+            })
+
+    })
 });
