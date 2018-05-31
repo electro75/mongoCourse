@@ -11,7 +11,6 @@ const UserSchema = new Schema({                         // creates the schema
         },
         required: [true, 'Name is required.']
     },
-    postCount: Number,
     posts: [ PostSchema ]
 });
 
