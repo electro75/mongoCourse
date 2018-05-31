@@ -14,6 +14,10 @@ const UserSchema = new Schema({                         // creates the schema
     posts: [ PostSchema ]
 });
 
+UserSchema.virtual('postCount').get(function() {
+    
+})
+
 const User = mongoose.model('user', UserSchema);        // creates the model
 
 module.exports = User;                                  // exports the model
