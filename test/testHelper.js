@@ -12,7 +12,7 @@ before((done)=>{                        //Commands Mocha to pause excection unti
 
 
 beforeEach((done)=>{
-        const { users, comment, blogpost } = mongoose.connection.collections
+        const { users, comments, blogposts } = mongoose.connection.collections
         users.drop(()=>{
                 comments.drop(()=>{
                         blogposts.drop(()=>{

@@ -17,10 +17,30 @@ describe('Associations', ()=>{
         joe.blogPosts.push(blogPost);
         blogPost.comments.push(comment);
 
-        /*  in the above lines mongoose takes care by 
-            only associating the blogPost with the user
-            and not push the entire model. */
+        /*  in the line 17 mongoose takes care by 
+            only associating the with the user
+            and not push the entire model like its done
+            while creating a new 'post'. Same for line 18. 
+            on line below, since the reference to user in
+            comment is not a 'collection' it is directly
+            equated to user instance and mongoose handles 
+            the rest.*/
 
         comment.user = joe;
+
+        // below line takes array of promises and executes .then 
+        // only when all have been settled. Promises are executed 
+        // in parallel.
+
+        Promise.all([ joe.save(), blogPost.save(), comment.save() ])        
+               .then(()=> done());
+    });
+
+    it.only('saves a relation between a user and a blogpost', (done)=>{
+        User.findOne({name: 'Joe'})
+            .then((user)=>{
+                console.log(user);
+                done();
+            });
     });
 });
