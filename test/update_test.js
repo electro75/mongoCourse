@@ -5,7 +5,7 @@ describe('Updating Records', ()=>{
     let john;
 
     beforeEach((done)=>{
-        john = new User({name: 'John', postCount: 0});
+        john = new User({name: 'John', likes: 0});
         john.save()
             .then(()=> done())
 
@@ -53,11 +53,11 @@ describe('Updating Records', ()=>{
         );
     });
 
-    xit('Increment user postCount by 1', (done)=>{
-        User.update({ name: 'John' }, { $inc: { postCount: 11 } })   // $inc is used to increment the specified property by 1.
+    it('Increment user likes by 1', (done)=>{
+        User.update({ name: 'John' }, { $inc: { likes: 11 } })   // $inc is used to increment the specified property by 1.
             .then(()=> User.findOne({name: 'John'} )
             .then((user) => {
-                assert(user.postCount === 11);
+                assert(user.likes === 11);
                 done();
             })
             )
