@@ -2,13 +2,20 @@ const assert = require('assert');
 const User = require('../src/user');
 
 describe('Reading Users from database', ()=>{
-    let john;
+    let john, santosh, surekha, ramesh;
 
     beforeEach((done)=>{
-        john = new User({name: 'John'});
 
-        john.save()
-            .then(()=>{ done(); })
+
+        john = new User({name: 'John'});
+        santosh = new User({name: 'Santosh'});
+        surekha = new User({name: 'Surekha'});
+        ramesh = new User({name: 'Ramesh'});
+
+        Promise.all([ santosh.save(), john.save(), surekha.save(), ramesh.save()])
+                .then(()=>{
+                    done();
+            })
     })
 
     it('Finds all Users with name of John', (done)=>{
@@ -26,4 +33,17 @@ describe('Reading Users from database', ()=>{
                 done();
             });
     });
+
+    it('can skip and limit the res', (done)=>{
+        User.find({})
+            .sort({ name: 1 })
+            .skip(1)
+            .limit(2)          // will only fetch user2 and user3.
+            .then((users)=>{
+                assert(users.length === 2)
+                assert(users[0].name === 'Ramesh')
+                assert(users[1].name === 'Santosh')
+                done();
+            })
+    })
 });
